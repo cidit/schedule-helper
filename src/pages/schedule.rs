@@ -4,6 +4,11 @@ use chrono::{prelude::*, TimeDelta};
 use itertools::Itertools;
 use leptos::prelude::*;
 
+enum Row {
+    Period { start: Duration },
+    Break { start: Duration },
+}
+
 /// Default Home Page
 #[component]
 pub fn Schedule() -> impl IntoView {
@@ -43,7 +48,7 @@ pub fn Schedule() -> impl IntoView {
                                 </td>
 
                                 {(0..7)
-                                    .map(|n| view! { <td class="w-30 border"></td> })
+                                    .map(|n| view! { <td class="w-30 border">{n}</td> })
                                     .collect_view()}
 
                             </tr>
@@ -51,8 +56,16 @@ pub fn Schedule() -> impl IntoView {
                             {if n != NUM_PERIODS - 1 {
                                 Some(
                                     view! {
-                                        <tr class="text-grey-300 text-italic text-[.6rem]">
-                                            <td class="w-min">"BREAK"</td>
+                                        <tr class="opacity-50 italic text-[.5rem] leading-none">
+                                            <td>this is bull
+                                                {format!("{hrs:02}:{:02}", mins2 + PERIOD_LENGTHS as f32)}
+                                            </td>
+                                            <td
+                                                colspan="100%"
+                                                class="overflow-hidden whitespace-nowrap whitespace-pre"
+                                            >
+                                                {"BREAK     ".repeat(35)}
+                                            </td>
                                         </tr>
                                     },
                                 )
